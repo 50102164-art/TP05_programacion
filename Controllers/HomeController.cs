@@ -17,7 +17,11 @@ public class HomeController : Controller
     {
         return View();
     }
-
+    public IActionResult RegistrarUsuarios(Usuarios UsuarioNuevo)
+    {
+        ViewBag.UsuarioNuevo = UsuarioNuevo;
+        return View();
+    }
     public IActionResult Privacy()
     {
         return View();

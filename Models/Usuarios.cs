@@ -13,7 +13,18 @@ public class Usuarios
 
 }
 
-public bool usuariosRepetidos()
+public bool usuariosRepetidos(Usuarios UsuarioNuevo)
 {
-    
+    BD bd = new BD();
+    Users = bd.TraerUsuarios();
+    int i = 0;
+    bool validacion = true;
+    while(UsuarioNuevo != Users[i] && i < Users.Count())
+    {
+        i++;
+    }
+    if(i < Users.Count()){
+        validacion = false;
+    }
+    return validacion;
 }
