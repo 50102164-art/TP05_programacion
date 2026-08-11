@@ -2,16 +2,16 @@ namespace TP05.Models;
 
 public class Usuarios
 {
-    public int IdUsuario{get; set;};
-    public string NombreUsuarios{get; set;};
-    public string Contraseña{get; set;};
-    public string Nombre{get; set;};
-    public string Apellido{get; set;};
-    public string TipoUsuario{get; set;};
+    public int IdUsuario{get; set;}
+    public string NombreUsuarios{get; set;}
+    public string Contraseña{get; set;}
+    public string Nombre{get; set;}
+    public string Apellido{get; set;}
+    public string TipoUsuario{get; set;}
 
-    public List<Usuarios> Users = new List<Usuarios>;
+    public List<Usuarios> Users = new List<Usuarios>();
 
-}
+
 
 public bool usuariosRepetidos(Usuarios UsuarioNuevo)
 {
@@ -27,4 +27,5 @@ public bool usuariosRepetidos(Usuarios UsuarioNuevo)
         validacion = false;
     }
     return validacion;
+}
 }

@@ -7,26 +7,5 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<form id="formRegistro" action="/Home/RegistrarUsuarios" method="POST">
-    <p>Nombre de usuario</p>
-    <input type="text" name="NombreUsuarios" id="NombreUsuarios">
-
-    <p>Contraseña</p>
-    <input type="hidden" name="Contraseña" id="Contraseña">
-
-    <p>Nombre</p>
-    <input type="text" name="Nombre" id="Nombre">
-
-    <p>Apellido</p>
-    <input type="text" name="Apellido" id="Apellido">
-
-    <select name="TipoUsuario" id="TipoUsuario">
-        <option value="Alumno">Alumno</option>
-        <option value="Docente">Docente</option>
-        <option value="Coordinador">Coordinador</option>
-        <option value="Padre">Padre</option>
-    </select>
-
-    <button type="button" onclick="site.VerificarDatosUsuario()">Submit</button>
-
-</form>
+<a asp-controller="Home" asp-action="IniciarSesion">Iniciar Sesión</a>
+<a asp-controller="Home" asp-action="Registrarse">Registrarse</a>

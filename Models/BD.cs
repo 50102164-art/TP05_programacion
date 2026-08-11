@@ -1,24 +1,25 @@
 namespace TP05.Models;
+using Microsoft.Data.SqlClient;
+using Dapper;
 
 public class BD{
-    
-}
-
-public List <Usuarios> TraerUsuarios(){
-    List <Usuarios> Users = new List <Usuarios>();
-    using (SqlConnection connection = new SqlConnection (_connectionString))
-    {
-        string query = "SELECT * FROM Usuarios";
-        Users= connection.Query<Usuarios>(query).ToList();
+    private static string _connectionString = "Server=localhost;Database=LoginRegistro;TrustServerCertificate=True;";
+    public List <Usuarios> TraerUsuarios(){
+        List <Usuarios> Users = new List <Usuarios>();
+        using (SqlConnection connection = new SqlConnection (_connectionString))
+        {
+            string query = "SELECT * FROM Usuarios";
+            Users = connection.Query<Usuarios>(query).ToList();
+        }
+        return Users;
     }
-    return Users; 
-}
 
-public void RegistrarUsuarios(Usuarios UsuarioNuevo){
+    public void RegistrarUsuarios(Usuarios UsuarioNuevo){
 
-    string query = "INSERT INTO Usuarios (IdUsuario, NombreUsuario, Contraseña, Nombre, Apellido, TipoUsuario) VALUES (@pIdUsuario, @pNombreUsuarios, @pContraseña, @pNombre, @pApellido, @pTipoUsuario)";
-    using (SqlConnection connection = new SqlConnection (_connectionString))
-    {
-        connection.Execute(query, new { pIdUsuario = UsuarioNuevo.IdUsuario, pNombreUsuario = UsuarioNuevo.NombreUsuario, pContraseña, UsuarioNuevo.Contraseña, pNombre = UsuarioNuevo.Nombre, pApellido = UsuarioNuevo.Apellido, pTipoUsuario = UsuarioNuevo.TipoUsuario});
+        string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario)";
+        using (SqlConnection connection = new SqlConnection (_connectionString))
+        {
+            connection.Execute(query, UsuarioNuevo);
+        }   
     }
 }

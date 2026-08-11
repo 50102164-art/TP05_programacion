@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form id="formRegistro" action="/Home/Registrarse" method="POST">
+    <p>Nombre de usuario</p>
+    <input type="text" name="NombreUsuarios" id="NombreUsuarios">
+
+    <p>Contraseña</p>
+    <input type="password" name="Contraseña" id="Contraseña">
+
+    <p>Nombre</p>
+    <input type="text" name="Nombre" id="Nombre">
+
+    <p>Apellido</p>
+    <input type="text" name="Apellido" id="Apellido"></br>
+
+    </br><select name="TipoUsuario" id="TipoUsuario">
+        <option value="Alumno">Alumno</option>
+        <option value="Docente">Docente</option>
+        <option value="Coordinador">Coordinador</option>
+        <option value="Padre">Padre</option>
+    </select>
+
+    <button type="button" onclick="site.VerificarDatosUsuario()">Submit</button>
+
+</form>
