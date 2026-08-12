@@ -32,40 +32,69 @@ public class HomeController : Controller
     public IActionResult IniciarSesion(Usuarios UsuarioNuevo)
     {
         BD bd = new BD();
-        ViewBag.UsuarioNuevo = UsuarioNuevo;
-        return View();
+
+        if (UsuarioNuevo == null || string.IsNullOrWhiteSpace(UsuarioNuevo.NombreUsuarios))
+        {
+            return View();
+        }
+
+        var usuario = bd.ObtenerUsuarioPorCredenciales(UsuarioNuevo.NombreUsuarios, UsuarioNuevo.Contraseña);
+        if (usuario != null)
+        {
+            HttpContext.Session.SetString("IdUsuarioNuevo", usuario.IdUsuario.ToString());
+            HttpContext.Session.SetString("UsuarioNombre", usuario.NombreUsuarios ?? string.Empty);
+            return RedirectToAction("PrivateHTML", "Home");
+        }
+        else
+        {
+            ViewBag.Error = "Credenciales inválidas";
+            return View();
+        }
     }
-    public IActionResult CerrarSesion(Usuarios UsuarioNuevo)
+    public IActionResult CerrarSesion()
     {
-        ViewBag.UsuarioNuevo = UsuarioNuevo;
-        return View();
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index");
     }
 
     public IActionResult Registrarse(Usuarios UsuarioNuevo, List<Usuarios> Users)
     {
-        int i = 0;
-        while(UsuarioNuevo.usuariosRepetidos(UsuarioNuevo) == false && i < Users.Count)
+        BD bd = new BD();
+
+        if (UsuarioNuevo == null || string.IsNullOrWhiteSpace(UsuarioNuevo.NombreUsuarios))
         {
-            i++;
+            return View();
         }
-        if(i < Users.Count)
+
+        bool existe = bd.BuscarSiExisteUnUsuario(UsuarioNuevo.NombreUsuarios);
+        if (existe)
+        {
+            ViewBag.Error = "El nombre de usuario ya existe";
+            ViewBag.UsuarioNuevo = UsuarioNuevo;
+            return View("Registrarse");
+        }
+        else
         {
             ViewBag.UsuarioNuevo = UsuarioNuevo;
-            return View("RegistrarUsuario");
+            bd.RegistrarUsuarios(UsuarioNuevo);
+            return View("IniciarSesion");
         }
-        HttpContext.Session.SetString("IdUsuarioNuevo", UsuarioNuevo.IdUsuario.ToString());
-        ViewBag.UsuarioNuevo = UsuarioNuevo;
-        return View();
     }
 
     public IActionResult GuardarUsuario(Usuarios UsuarioNuevo)
     {
         BD bd = new BD();
-        if(UsuarioNuevo.usuariosRepetidos(UsuarioNuevo)){
-            bd.RegistrarUsuarios(UsuarioNuevo);
-            return RedirectToAction("IniciarSesion", "Home");
-        }else{
-            return RedirectToAction("RegistrarUsuarios", "Home");
+        if (UsuarioNuevo.usuariosRepetidos(UsuarioNuevo))
+        {
+            int nuevoId = bd.RegistrarUsuariosRetornandoId(UsuarioNuevo);
+            HttpContext.Session.SetString("IdUsuarioNuevo", nuevoId.ToString());
+            HttpContext.Session.SetString("UsuarioNombre", UsuarioNuevo.NombreUsuarios ?? string.Empty);
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            ViewBag.Error = "El usuario ya existe";
+            return RedirectToAction("Registrarse", "Home");
         }
     }
 }
