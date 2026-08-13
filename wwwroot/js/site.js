@@ -49,7 +49,9 @@ var site = (function () {
                 return;
             }
         }
+        //Linea de codigo para enviar el formulario hacia el controlador
         form.submit();
+
     }
     return {
         VerificarDatosUsuario: VerificarDatosUsuario

@@ -57,6 +57,7 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+
     public IActionResult Registrarse(Usuarios UsuarioNuevo, List<Usuarios> Users)
     {
         BD bd = new BD();

@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 
 public class BD{
-    private static string _connectionString = "Server=localhost;Database=Login;TrustServerCertificate=True;";
+    private static string _connectionString = "Server=localhost;Database=Login;Integrated Security=True;TrustServerCertificate=True;";
     public List <Usuarios> TraerUsuarios(){
         List <Usuarios> Users = new List <Usuarios>();
         using (SqlConnection connection = new SqlConnection (_connectionString))
