@@ -8,24 +8,24 @@ public class Usuarios
     public string Nombre{get; set;}
     public string Apellido{get; set;}
     public string TipoUsuario{get; set;}
+    public int IdDomicilio{get; set;}
 
     public List<Usuarios> Users = new List<Usuarios>();
 
 
-
-public bool usuariosRepetidos(Usuarios UsuarioNuevo)
-{
-    BD bd = new BD();
-    Users = bd.TraerUsuarios();
-    int i = 0;
-    bool validacion = true;
-    while(UsuarioNuevo != Users[i] && i < Users.Count())
+    public bool usuariosRepetidos(Usuarios UsuarioNuevo)
     {
-        i++;
+        BD bd = new BD();
+        Users = bd.TraerUsuarios();
+        int i = 0;
+        bool validacion = true;
+        while(UsuarioNuevo != Users[i] && i < Users.Count())
+        {
+            i++;
+        }
+        if(i < Users.Count()){
+            validacion = false;
+        }
+        return validacion;
     }
-    if(i < Users.Count()){
-        validacion = false;
-    }
-    return validacion;
-}
 }

@@ -2,18 +2,23 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-var site = (function () {
+let site = (function () {
     function VerificarDatosUsuario() {
-        var form = document.getElementById("formRegistro");
+        let form = document.getElementById("formRegistro");
         if (!form) return;
 
-        var nombreUserElem = document.getElementById("NombreUsuarios");
-        var passElem = document.getElementById("Contraseña");
-        var nombreElem = document.getElementById("Nombre");
-        var apellidoElem = document.getElementById("Apellido");
+        let nombreUserElem = document.getElementById("NombreUsuarios");
+        let passElem = document.getElementById("Contraseña");
+        let nombreElem = document.getElementById("Nombre");
+        let apellidoElem = document.getElementById("Apellido");
 
-        var nombreUser = nombreUserElem ? nombreUserElem.value.trim() : "";
-        var pass = passElem ? passElem.value : "";
+        //agregar elementos de domicilio
+        let calleElem = document.getElementById("Calle");
+        let numeroElem = document.getElementById("Numero");
+        let departamentoElem = document.getElementById("Departamento");
+
+        let nombreUser = nombreUserElem ? nombreUserElem.value.trim() : "";
+        let pass = passElem ? passElem.value : "";
 
         if (!pass || pass.length < 8) {
             alert("La contraseña debe tener al menos 8 caracteres.");
@@ -29,15 +34,15 @@ var site = (function () {
 
         // Si estamos en la página de registro, validar nombre y apellido
         if (nombreElem || apellidoElem) {
-            var nombre = nombreElem ? nombreElem.value.trim() : "";
-            var apellido = apellidoElem ? apellidoElem.value.trim() : "";
+            let nombre = nombreElem ? nombreElem.value.trim() : "";
+            let apellido = apellidoElem ? apellidoElem.value.trim() : "";
 
             if (!nombre || !apellido) {
                 alert("Complete Nombre y Apellido.");
                 return;
             }
 
-            var alphaRegex = /^[A-Za-z]+$/;
+            let alphaRegex = /^[A-Za-z]+$/;
             if (!alphaRegex.test(nombre)) {
                 alert("Nombre con caracteres inválidos.");
                 nombreElem.focus();
@@ -48,6 +53,17 @@ var site = (function () {
                 apellidoElem.focus();
                 return;
             }
+
+            //validar que la calle no este vacia y que el numero sea un numero
+
+            let calle = calleElem ? calleElem.value.trim() : "";
+            let numero = numeroElem ? numeroElem.value : "";
+
+            if (!calle || !numero) {
+                alert("Complete todos los campos de domicilio.");
+                return;
+            }
+
         }
         //Linea de codigo para enviar el formulario hacia el controlador
         form.submit();

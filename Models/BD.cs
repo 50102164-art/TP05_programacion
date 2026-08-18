@@ -14,16 +14,35 @@ public class BD{
         return Users;
     }
 
+    public List <Domicilio> TraerDomicilios(){
+        List <Domicilio> Domicilios = new List <Domicilio>();
+        using (SqlConnection connection = new SqlConnection (_connectionString))
+        {
+            string query = "SELECT * FROM Domicilio";
+            Domicilios = connection.Query<Domicilio>(query).ToList();
+        }
+        return Domicilios;
+    }
+
     public void RegistrarUsuarios(Usuarios UsuarioNuevo){
-        string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario)";
+        string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario, IdDomicilio) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario, @IdDomicilio)";
         using (SqlConnection connection = new SqlConnection (_connectionString))
         {
             connection.Execute(query, UsuarioNuevo);
         }   
     }
 
+    //Crea una función que registre un domicilio en la base de datos
+    public void RegistrarDomicilio(Domicilio DomicilioNuevo){
+        string query ="INSERT INTO Domicilio (Calle, Numero, Departamento) VALUES (@Calle, @Numero, @Departamento)";
+        using (SqlConnection connection = new SqlConnection (_connectionString))
+        {
+            connection.Execute(query, DomicilioNuevo);
+        }   
+    }
+
     public int RegistrarUsuariosRetornandoId(Usuarios UsuarioNuevo){
-        string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario); SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario, IdDomicilio) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario, @IdDomicilio); SELECT CAST(SCOPE_IDENTITY() AS INT);";
         using (SqlConnection connection = new SqlConnection (_connectionString))
         {
             int id = connection.ExecuteScalar<int>(query, UsuarioNuevo);

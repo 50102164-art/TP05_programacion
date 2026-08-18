@@ -43,7 +43,7 @@ public class HomeController : Controller
         {
             HttpContext.Session.SetString("IdUsuarioNuevo", usuario.IdUsuario.ToString());
             HttpContext.Session.SetString("UsuarioNombre", usuario.NombreUsuarios ?? string.Empty);
-            return RedirectToAction("PrivateHTML", "Home");
+            return View("PrivateHTML");
         }
         else
         {
@@ -51,6 +51,7 @@ public class HomeController : Controller
             return View();
         }
     }
+
     public IActionResult CerrarSesion()
     {
         HttpContext.Session.Clear();
@@ -58,11 +59,11 @@ public class HomeController : Controller
     }
 
 
-    public IActionResult Registrarse(Usuarios UsuarioNuevo, List<Usuarios> Users)
+    public IActionResult Registrarse(Usuarios UsuarioNuevo, Domicilio DomicilioNuevo)
     {
         BD bd = new BD();
 
-        if (UsuarioNuevo == null || string.IsNullOrWhiteSpace(UsuarioNuevo.NombreUsuarios))
+        if (UsuarioNuevo == null || DomicilioNuevo == null)
         {
             return View();
         }
@@ -77,6 +78,8 @@ public class HomeController : Controller
         else
         {
             ViewBag.UsuarioNuevo = UsuarioNuevo;
+            ViewBag.DomicilioNuevo = DomicilioNuevo;
+            bd.RegistrarDomicilio(DomicilioNuevo);
             bd.RegistrarUsuarios(UsuarioNuevo);
             return View("IniciarSesion");
         }
@@ -96,6 +99,22 @@ public class HomeController : Controller
         {
             ViewBag.Error = "El usuario ya existe";
             return RedirectToAction("Registrarse", "Home");
+        }
+    }
+
+    //Crea una funcion para guardar el domicilio en la base de datos si el domicilio no existe, sino muestra un mensaje de error.
+    public IActionResult GuardarDomicilio(Domicilio DomicilioNuevo)
+    {
+        BD bd = new BD();
+        if (DomicilioNuevo.domiciliosRepetidos(DomicilioNuevo))
+        {
+            // Aquí puedes agregar la lógica para guardar el domicilio en la base de datos si es necesario
+            return View("Index");
+        }
+        else
+        {
+            ViewBag.Error = "El domicilio ya existe";
+            return View("Registrarse");
         }
     }
 }
