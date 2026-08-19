@@ -9,18 +9,18 @@
 
 <form id="formRegistro" action="/Home/Registrarse" method="POST">
     <p>Nombre de usuario</p>
-    <input type="text" name="NombreUsuarios" id="NombreUsuarios">
+    <input type="text" name="UsuarioNuevo.NombreUsuarios" id="NombreUsuarios">
 
     <p>Contraseña</p>
-    <input type="password" name="Contraseña" id="Contraseña">
+    <input type="password" name="UsuarioNuevo.Contraseña" id="Contraseña">
 
     <p>Nombre</p>
-    <input type="text" name="Nombre" id="Nombre">
+    <input type="text" name="UsuarioNuevo.Nombre" id="Nombre">
 
     <p>Apellido</p>
-    <input type="text" name="Apellido" id="Apellido"></br>
+    <input type="text" name="UsuarioNuevo.Apellido" id="Apellido"></br>
 
-    </br><select name="TipoUsuario" id="TipoUsuario">
+    </br><select name="UsuarioNuevo.TipoUsuario" id="TipoUsuario">
         <option value="Alumno">Alumno</option>
         <option value="Docente">Docente</option>
         <option value="Coordinador">Coordinador</option>
@@ -29,13 +29,13 @@
 
     <!-- agregar campos de domicilio -->
     <p>Calle</p>
-    <input type="text" name="Calle" id="Calle">
+    <input type="text" name="DomicilioNuevo.Calle" id="Calle">
 
     <p>Numero</p>
-    <input type="number" name="Numero" id="Numero">
+    <input type="number" name="DomicilioNuevo.Numero" id="Numero">
 
     <p>Departamento</p>
-    <input type="text" name="Departamento" id="Departamento">
+    <input type="text" name="DomicilioNuevo.Departamento" id="Departamento">
 
     </br><button type="button" onclick="site.VerificarDatosUsuario()">Submit</button>
 

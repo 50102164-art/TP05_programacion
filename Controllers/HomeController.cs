@@ -57,6 +57,10 @@ public class HomeController : Controller
         HttpContext.Session.Clear();
         return RedirectToAction("Index");
     }
+   public IActionResult Registro()
+    {
+        return View("Registrarse");
+    }
 
 
     public IActionResult Registrarse(Usuarios UsuarioNuevo, Domicilio DomicilioNuevo)
@@ -79,7 +83,9 @@ public class HomeController : Controller
         {
             ViewBag.UsuarioNuevo = UsuarioNuevo;
             ViewBag.DomicilioNuevo = DomicilioNuevo;
-            bd.RegistrarDomicilio(DomicilioNuevo);
+
+            int idDomicilio = bd.RegistrarDomicilioRetornandoId(DomicilioNuevo);
+            UsuarioNuevo.IdDomicilio = idDomicilio;
             bd.RegistrarUsuarios(UsuarioNuevo);
             return View("IniciarSesion");
         }

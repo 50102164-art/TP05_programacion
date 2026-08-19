@@ -41,6 +41,15 @@ public class BD{
         }   
     }
 
+    public int RegistrarDomicilioRetornandoId(Domicilio DomicilioNuevo){
+        string query ="INSERT INTO Domicilio (Calle, Numero, Departamento) VALUES (@Calle, @Numero, @Departamento); SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        using (SqlConnection connection = new SqlConnection (_connectionString))
+        {
+            int id = connection.ExecuteScalar<int>(query, DomicilioNuevo);
+            return id;
+        }
+    }
+
     public int RegistrarUsuariosRetornandoId(Usuarios UsuarioNuevo){
         string query ="INSERT INTO Usuarios (NombreUsuarios, Contraseña, Nombre, Apellido, TipoUsuario, IdDomicilio) VALUES (@NombreUsuarios, @Contraseña, @Nombre, @Apellido, @TipoUsuario, @IdDomicilio); SELECT CAST(SCOPE_IDENTITY() AS INT);";
         using (SqlConnection connection = new SqlConnection (_connectionString))
